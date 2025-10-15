@@ -33,7 +33,7 @@ class Base:
     def parse_args(self, args: list[str]):
         current_args = args[1:]
         while current_args:
-            current_arg = current_args[0]
+            current_arg = current_args[0].lower()
             shift = 1
             if current_arg in self.args_mapper:
                 shift = self.args_mapper[current_arg].process(current_args) + 1
