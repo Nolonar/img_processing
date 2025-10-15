@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from base import Argument, Base
+from common.base import Argument, Base
 
 
 class DuplicateDetect(Base):

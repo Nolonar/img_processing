@@ -1,6 +1,6 @@
 import cv2
 
-from base import Argument, Base
+from common.base import Argument, Base
 
 
 class Crop(Base):

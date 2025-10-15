@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from base import Argument, Base
+from common.base import Argument, Base
 
 min_v = 0
 max_v = 255
