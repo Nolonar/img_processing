@@ -8,8 +8,8 @@ max_v = 255
 
 
 class Level(Base):
-    def __init__(self, valid_extensions=None):
-        super().__init__(valid_extensions)
+    def __init__(self):
+        super().__init__()
 
         self.arg_read_mode = cv2.IMREAD_GRAYSCALE
         self.arg_low = min_v
@@ -43,7 +43,7 @@ class Level(Base):
         img = cv2.imread(str(file), self.arg_read_mode).astype(float)
         img = np.clip((img - self.arg_low) * self.arg_scale, min_v, max_v)
 
-        output_file = (output_dir / file.stem).with_suffix(".png")
+        output_file = (output_dir / file.stem).with_suffix(self.output_suffix)
         cv2.imwrite(str(output_file), img.astype(np.uint8))
 
 

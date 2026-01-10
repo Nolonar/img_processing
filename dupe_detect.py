@@ -7,8 +7,9 @@ from common.base import Argument, Base
 
 
 class DuplicateDetect(Base):
-    def __init__(self, valid_extensions=None):
-        super().__init__(valid_extensions)
+    def __init__(self):
+        super().__init__()
+
         self.output_dir = None
         self.use_full_path = True
         self.groups: dict[int, list[Path]] = {}

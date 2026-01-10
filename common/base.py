@@ -19,13 +19,14 @@ class Argument:
 
 
 class Base:
-    def __init__(self, valid_extensions: set[str] = None):
-        self.valid_extensions = valid_extensions or {".bmp", ".png", ".jpg"}
+    def __init__(self):
+        self.valid_extensions = {".bmp", ".png", ".jpg"}
         self.args_mapper: dict[str, Argument] = {
             "-o": Argument(lambda args: self.set_output_dir(args[1]), 1)
         }
         self.arg_paths: set[Path] = set()
         self.output_dir = Path.home() / "img_processing_output"
+        self.output_suffix = ".png"
 
     def set_output_dir(self, path: str):
         self.output_dir = Path(path)

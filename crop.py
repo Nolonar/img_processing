@@ -4,8 +4,8 @@ from common.base import Argument, Base
 
 
 class Crop(Base):
-    def __init__(self, valid_extensions=None):
-        super().__init__(valid_extensions)
+    def __init__(self):
+        super().__init__()
 
         self.arg_offset_top = 0
         self.arg_offset_left = 0
@@ -53,7 +53,7 @@ class Crop(Base):
         right = width - self.arg_offset_right
         img = img[top:bottom, left:right]
 
-        output_file = (output_dir / file.stem).with_suffix(".png")
+        output_file = (output_dir / file.stem).with_suffix(self.output_suffix)
         cv2.imwrite(str(output_file), img)
 
 
