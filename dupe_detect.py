@@ -15,7 +15,7 @@ class DuplicateDetect(Base):
         self.groups: dict[int, list[Path]] = {}
 
         self.hash_function = self.get_hash_perceptual
-        self.arg_is_recursive = False
+        self.is_recursive = False
 
         self.args_mapper["-h"] = Argument(
             lambda args: self.set_hash_function(args[1]), 1
@@ -31,14 +31,14 @@ class DuplicateDetect(Base):
         }.get(mode, self.get_hash_perceptual)
 
     def set_is_recursive(self, value: bool):
-        self.arg_is_recursive = value
+        self.is_recursive = value
 
     def post_parse(self):
-        if self.arg_is_recursive:
+        if self.is_recursive:
             self.arg_paths = self.flatten_paths(self.arg_paths)
             return
 
-        self.use_full_path = self.arg_is_recursive or len(self.arg_paths) > 1
+        self.use_full_path = self.is_recursive or len(self.arg_paths) > 1
         files = {f for f in self.arg_paths if f.is_file()}
         dirs = {d for d in self.arg_paths if d.is_dir()}
         sub_files = {f for d in dirs for f in d.iterdir()}

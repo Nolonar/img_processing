@@ -27,6 +27,7 @@ class Base:
         self.arg_paths: set[Path] = set()
         self.output_dir = Path.home() / "img_processing_output"
         self.output_suffix = ".png"
+        self.is_recursive = False
 
     def set_output_dir(self, path: str):
         self.output_dir = Path(path)
@@ -47,8 +48,13 @@ class Base:
     def post_parse(self):
         pass
 
+    def is_valid_target(self, path: Path) -> bool:
+        return path.is_dir() or self.is_valid(path)
+
     def is_valid(self, path: Path) -> bool:
-        return path.is_dir() or path.suffix in self.valid_extensions
+        return path.suffix in self.valid_extensions or (
+            self.is_recursive and path.is_dir()
+        )
 
     def run(self):
         self.parse_args(sys.argv)
@@ -57,7 +63,7 @@ class Base:
                 print(f"\x1b[91mFile does not exist: {path}\x1b[0m")
                 self.arg_paths.remove(path)
                 continue
-            if not self.is_valid(path):
+            if not self.is_valid_target(path):
                 print(f"\x1b[91mInvalid file extension: {path}\x1b[0m")
                 self.arg_paths.remove(path)
                 continue
