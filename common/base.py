@@ -20,7 +20,7 @@ class Argument:
 
 class Base:
     def __init__(self):
-        self.valid_extensions = {".bmp", ".png", ".jpg"}
+        self.valid_extensions = {".bmp", ".png", ".jpg", ".webp"}
         self.args_mapper: dict[str, Argument] = {
             "-o": Argument(lambda args: self.set_output_dir(args[1]), 1)
         }
