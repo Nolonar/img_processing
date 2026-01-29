@@ -4,8 +4,8 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import Callable
 
-is_venv = sys.prefix != sys.base_prefix
-print(f"Virtual environment running: {is_venv}")
+import joblib
+from joblib import Parallel, delayed
 
 
 class Argument:
@@ -20,6 +20,9 @@ class Argument:
 
 class Base:
     def __init__(self):
+        is_venv = sys.prefix != sys.base_prefix
+        print(f"Virtual environment running: {is_venv}")
+
         self.valid_extensions = {".bmp", ".png", ".jpg", ".webp"}
         self.args_mapper: dict[str, Argument] = {
             "-o": Argument(lambda args: self.set_output_dir(args[1]), 1)
@@ -28,6 +31,7 @@ class Base:
         self.output_dir = Path.home() / "img_processing_output"
         self.output_suffix = ".png"
         self.is_recursive = False
+        self.supports_multithreading = True
 
     def set_output_dir(self, path: str):
         self.output_dir = Path(path)
@@ -79,10 +83,15 @@ class Base:
             self.output_dir.mkdir(exist_ok=True)
             print(f"Output directory: {self.output_dir}")
 
-        self.process(sorted(self.arg_paths))
+        (
+            self.process_multithreaded
+            if self.supports_multithreading
+            else self.process_singlethreaded
+        )(sorted(self.arg_paths))
+
         self.post_run()
 
-    def process(self, files_to_process: list[Path]):
+    def process_singlethreaded(self, files_to_process: list[Path]):
         file_count = len(files_to_process)
         padding = len(str(file_count))
 
@@ -93,6 +102,12 @@ class Base:
                 f"{file_i:>{padding}}/{file_count:>{padding}} {percentage:>3}%    {file.name}"
             )
             self.process_file(file, self.output_dir)
+
+    def process_multithreaded(self, files_to_process: list[Path]):
+        Parallel(n_jobs=joblib.cpu_count(), verbose=True)(
+            delayed(self.process_file)(file, self.output_dir)
+            for file in files_to_process
+        )
 
     @abstractmethod
     def process_file(self, file: Path, output_dir: Path):

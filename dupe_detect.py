@@ -10,6 +10,8 @@ class DuplicateDetect(Base):
     def __init__(self):
         super().__init__()
 
+        self.supports_multithreading = False
+
         self.output_dir = None
         self.use_full_path = True
         self.groups: dict[int, list[Path]] = {}
