@@ -4,6 +4,7 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import Callable
 
+import cv2
 import joblib
 from joblib import Parallel, delayed
 
@@ -30,6 +31,7 @@ class Base:
         self.arg_paths: set[Path] = set()
         self.output_dir = Path.home() / "img_processing_output"
         self.output_suffix = ".png"
+        self.output_args = [cv2.IMWRITE_PNG_COMPRESSION, 9]
         self.is_recursive = False
         self.supports_multithreading = True
 

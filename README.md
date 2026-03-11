@@ -76,3 +76,18 @@ Changes the image's minimum and maximum brightness value.
 #### Examples
 
 - `python ./level.py -l 30 /path/to/files`: darkens the images by setting all pixels with value of 30 or lower to 0 and redistributing the value of the remaining pixels in the range [0, 255]
+
+
+### convertanim.py
+
+Converts animated images (.gif, .avif, .webp) to Animated PNG (.apng)
+
+Note: if you need to convert to a different format, consider modifying the code to suit your needs. See https://docs.opencv.org/4.11.0/d8/d6a/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac for more info about save flags.
+
+#### Options
+
+No options
+
+#### Examples
+
+- `python ./convertanim.py /path/to/files`

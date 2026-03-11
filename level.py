@@ -44,7 +44,7 @@ class Level(Base):
         img = np.clip((img - self.arg_low) * self.arg_scale, min_v, max_v)
 
         output_file = (output_dir / file.stem).with_suffix(self.output_suffix)
-        cv2.imwrite(str(output_file), img.astype(np.uint8))
+        cv2.imwrite(str(output_file), img.astype(np.uint8), self.output_args)
 
 
 Level().run()

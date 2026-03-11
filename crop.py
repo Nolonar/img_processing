@@ -54,7 +54,7 @@ class Crop(Base):
         img = img[top:bottom, left:right]
 
         output_file = (output_dir / file.stem).with_suffix(self.output_suffix)
-        cv2.imwrite(str(output_file), img)
+        cv2.imwrite(str(output_file), img, self.output_args)
 
 
 Crop().run()
