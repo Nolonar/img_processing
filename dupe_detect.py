@@ -107,4 +107,4 @@ class DupeDetect(Base):
         return hash((high_freq > median).tobytes())
 
 
-DuplicateDetect().run()
+DupeDetect().run()
