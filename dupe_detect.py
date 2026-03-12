@@ -6,7 +6,7 @@ import numpy as np
 from common.base import Argument, Base
 
 
-class DuplicateDetect(Base):
+class DupeDetect(Base):
     def __init__(self):
         super().__init__()
 
