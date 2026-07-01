@@ -90,4 +90,4 @@ No options
 
 #### Examples
 
-- `python ./convertanim.py /path/to/files`
+- `python ./convert.py /path/to/files`
