@@ -16,7 +16,7 @@ class Convert(Base):
     def process_file(self, file, output_dir):
         success, data = cv2.imreadanimation(str(file))
         output_file = output_dir / file.stem
-        if success:
+        if success and len(data.frames) > 1:
             output_file = output_file.with_suffix(self.output_suffix_animation)
             save_func = cv2.imwriteanimation
         else:
